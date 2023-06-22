@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('appsettings', function (Blueprint $table) {
             $table->id();
             $table->string('shareablelink');
+            $table->string('apppackageid');
             $table->timestamps();
         });
     }

@@ -11,6 +11,7 @@ class appsettings extends Model
     protected $table = 'appsettings';
     protected $fillable = [
               'shareablelink',
+              'apppackageid'
 
     ];
 }
