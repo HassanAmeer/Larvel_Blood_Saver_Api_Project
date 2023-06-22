@@ -37,6 +37,7 @@ class requestedusersController extends Controller
             // 'requserprofile' => 'required|string|max:191',
             // 'requserphone' => 'required|string|max:191',
             'donoruserid' => 'required',
+            'lasttimedonated' => 'required',
             // 'donorusername' => 'required|string|max:191',
             // 'donoruserprofile' => 'required|string|max:191',
             // 'donoruserphone' => 'required|string|max:191',
@@ -57,18 +58,21 @@ class requestedusersController extends Controller
             'requsername' => $getuser1->username,
             'requserprofile' => $getuser1->profile_image,
             'requserphone' => $getuser1->phonecode.$getuser1->phone,
+            'requserloc' => $getuser1->country,
             "donoruserid" => $getdonoruser2 -> id,
             "donorusername" => $getdonoruser2->username,
             "donoruserprofile" => $getdonoruser2->profile_image,
             "donoruserphone" => $getdonoruser2->phonecode.$getdonoruser2->phone,
             "donoruserloc" => $getdonoruser2->country,
+            "donorbloodgroup" => $getdonoruser2->bloodgroup,
             "donatedstatus" => 0,
+            "lasttimedonated" => $request->lasttimedonated,
         ]);
     
         if ($check) {
             return response()->json([
                 "status" => 1,
-                "message" => "Request For Blood Group Post Is Created",
+                "message" => "Request For Blood Group Is Created",
                 "data" => $check,
             ], 200);
         } else {
@@ -78,4 +82,48 @@ class requestedusersController extends Controller
             ], 404);
         }
     }
+    ////////
+     ///////// delete request by id
+     public function deleterequestpostbyidf($id){
+
+        $check = requestedusers::find($id);
+        if($check){
+        $check -> delete();
+            $data = [
+                'status' => 200,
+                'Deleted By id' => $id,
+                'message' => 'Requested Post Deleted'
+                // 'message' => 'Request Post Deleted By Id: ' . $id,
+            ];
+            return response()->json($data, 200);
+        } else {
+            return response()->json([
+                "status" => 0,
+                "message" => "This ID has no Request Post data",
+            ], 404);
+        }
+            
+    }
+     ///////// changereqpoststatusf request by id
+     public function changereqpoststatusf(Request $request, $id){
+
+        $check = requestedusers::find($id);
+        if($check){
+            $check->update([
+                'donatedstatus' => $request->changereqpoststatus,]);
+            $data = [
+                'status' => 200,
+                'message' => 'Requested Status Changed',
+                // 'message' => 'Request Status Changed By Id: ' . $id,
+            ];
+            return response()->json($data, 200);
+        } else {
+            return response()->json([
+                "status" => 0,
+                "message" => "This ID has no Requested Post data",
+            ], 404);
+        }
+            
+    }
+
 }

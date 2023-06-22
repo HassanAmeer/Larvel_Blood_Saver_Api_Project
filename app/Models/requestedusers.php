@@ -14,11 +14,13 @@ class requestedusers extends Model
       'requsername',
       'requserprofile',
       'requserphone',
+      'requserloc',
       'donoruserid',
       'donorusername',
       'donoruserprofile',
       'donoruserphone',
       'donoruserloc',
       'donatedstatus',
+      'lasttimedonated',
   ];
 }

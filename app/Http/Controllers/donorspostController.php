@@ -36,13 +36,13 @@ class donorspostController extends Controller
             $data = [
                 'status' => 200,
                 'Deleted By id' => $id,
-                'student' => 'Post Soft Deleted By Id: ' . $id,
+                'message' => 'Post Deleted By Id: ' . $id,
             ];
             return response()->json($data, 200);
         } else {
             return response()->json([
                 "status" => 0,
-                "Message" => "This ID has no Post data",
+                "message" => "This ID has no Post data",
             ], 404);
         }
             
@@ -150,8 +150,69 @@ class donorspostController extends Controller
             ], 404);
         }
     }
-///////////////////////
-    function imageapif (Request $resquest) {
-   dd($resquest->all());
+        
+     ///////// changepostdonattionstatusf request by id
+     public function changepostdonattionstatusf(Request $request, $id){
+
+        $check = donorspost::find($id);
+        if($check){
+            $check->update([
+                'donorstatus' => $request->postdonationstatus,]);
+                // 'available' => $request->available,]);
+            $data = [
+                'status' => 200,
+                'message' => 'Donation Status Changed',
+                // 'message' => 'Request Status Changed By Id: ' . $id,
+            ];
+            return response()->json($data, 200);
+        } else {
+            return response()->json([
+                "status" => 0,
+                "message" => "This ID has no Post data",
+            ], 404);
+        }
+            
     }
+     ///////// updatestatuspostf request by id
+     public function updatestatuspostf(Request $request, $id){
+
+        $check = donorspost::find($id);
+        if($check){
+            $check->update([
+                'available' => $request->postavailablestatus,]);
+            $data = [
+                'status' => 200,
+                'message' => 'Availability Status Changed',
+                // 'message' => 'Request Status Changed By Id: ' . $id,
+            ];
+            return response()->json($data, 200);
+        } else {
+            return response()->json([
+                "status" => 0,
+                "message" => "This ID has no Post data",
+            ], 404);
+        }
+            
+    }
+     ///////// deleteuserpostf request by id
+     public function deleteuserpostf(Request $request, $id){
+
+        $check = donorspost::find($id);
+        if($check){
+           $check->delete();
+            $data = [
+                'status' => 200,
+                'message' => 'This Post Deleted By Id: ' . $id,
+            ];
+            return response()->json($data, 200);
+        } else {
+            return response()->json([
+                "status" => 0,
+                "message" => "This ID has no Post data",
+            ], 404);
+        }
+            
+    }
+///////////////////////
+
 }

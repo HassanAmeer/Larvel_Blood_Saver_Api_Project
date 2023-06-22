@@ -23,7 +23,9 @@ return new class extends Migration
         $table->string('donoruserprofile');
         $table->string('donoruserphone');
         $table->string('donoruserloc');
+        $table->string('donorbloodgroup');
         $table->integer('donatedstatus');
+        $table->string('lasttimedonated');
         $table->timestamps();
 });
     }

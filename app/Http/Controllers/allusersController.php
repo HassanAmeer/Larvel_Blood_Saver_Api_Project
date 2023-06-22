@@ -30,7 +30,7 @@ class allusersController extends Controller
     /// get single user record
     public function userprofilef ($id){
 
-        $check = allusers::all()->where('id',$id);
+        $check = allusers::find($id);
         if($check->count() > 0){
             return response()->json([
                 "status" => 1,
@@ -113,7 +113,7 @@ class allusersController extends Controller
         }
         $check = AllUsers::create([
             "username" => $request->username,
-            'profile_image' => 'images/user.png',
+            'profile_image' => 'public/images/user.png',
             "phonecode" => $request->phonecode,
             "phone" => $request->phone,
             "password" => $request->password,
@@ -142,6 +142,8 @@ class allusersController extends Controller
       //// for profile update
       public function profileupdatef(Request $request, $id)
       {
+        //   dd( $request->all());
+
           // dd($id);
         //   dd( $request->all());
           // Get the current user
@@ -162,12 +164,15 @@ class allusersController extends Controller
               $image = $request->file('profile_image');
               $imagename = time() . '.' . $image->getClientOriginalExtension();
               $image->move(public_path('images'), $imagename);
-              $user->profile_image = $imagename;
+              $user->profile_image = 'public/images/'.$imagename;
           }
       
           // Update the user data if provided in the request
           if ($request->filled('username')) {
               $user->username = $request->input('username');
+          }
+          if ($request->filled('phonecode')) {
+              $user->phonecode = $request->input('phonecode');
           }
           if ($request->filled('phone')) {
               $user->phone = $request->input('phone');
